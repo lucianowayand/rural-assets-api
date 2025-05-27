@@ -1,15 +1,16 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Logger, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 import { IsStaffGuard } from './guards/is-staff.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserMapper } from './user.mapper';
 import { LoginDto, LoginResponseDto } from './dto/login.dto';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('users')
 @Controller('users')
 export class UserController {
+  private readonly logger = new Logger(UserController.name);
   constructor(private readonly userService: UserService) {}
 
   @Post()
@@ -19,9 +20,15 @@ export class UserController {
     type: UserDto,
   })
   @UseGuards(IsStaffGuard)
-  async register(@Body() user: CreateUserDto): Promise<UserDto> {
+  async register(
+    @Body() user: CreateUserDto,
+    @Req() req,
+  ): Promise<UserDto> {
     const newUser = await this.userService.register(user);
-
+    const staffEmail = req.user?.email || 'unknown';
+    this.logger.log(
+      `Staff (${staffEmail}) created user: ${newUser.email} (id: ${newUser.id})`,
+    );
     return UserMapper.fromEntityToDto(newUser);
   }
 
