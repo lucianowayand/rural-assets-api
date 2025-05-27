@@ -1,8 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { existsSync, writeFileSync } from 'fs';
 
 async function bootstrap() {
+  // Ensure dist/commit.txt exists with a value
+  if (!existsSync('dist/commit.txt')) {
+    try {
+      const { execSync } = require('child_process');
+      const hash = execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim();
+      writeFileSync('dist/commit.txt', hash);
+    } catch {
+      writeFileSync('dist/commit.txt', 'dev');
+    }
+  }
+
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
