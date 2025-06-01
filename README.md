@@ -1,85 +1,54 @@
-# NestJS Minimal API
+# Rural Assets API
 
-## Purpose
-This project is a minimal, production-ready NestJS API template for rapid backend development. It features:
-- User registration and authentication (with JWT)
-- Role-based access control (STAFF/USER)
-- PostgreSQL integration (external, via DATABASE_URL)
-- TypeORM migrations
-- OpenAPI (Swagger) documentation (auto-generated)
-- Docker support for easy deployment
+## Brain Agriculture - Teste Técnico v2
 
-## Requirements
-- Node.js 22.14
-- npm
-- Docker (optional, for containerized runs)
-- External PostgreSQL database (see `.env`)
+Este projeto consiste em uma API backend para gerenciar o cadastro de produtores rurais e suas propriedades.
 
-## Getting Started
+## Como rodar o projeto
 
-### 1. Clone the repository
-```bash
-git clone <repo-url>
-cd nestjs-minimal
-```
-
-### 2. Install dependencies
+### 1. Instale as dependências
 ```bash
 npm install
 ```
 
-### 3. Configure environment variables
-Edit the `.env` file with your PostgreSQL connection string and secret:
+### 2. Configure as variáveis de ambiente
+Crie um arquivo `.env` com:
 ```
 DATABASE_URL=postgresql://<user>:<password>@<host>:<port>/<db>
 SECRET=your_jwt_secret
 ```
 
-### 4. Run database migrations
+### 3. Execute as migrações
 ```bash
 npm run migration
 ```
 
-### 5. Start the application
+### 4. Inicie a aplicação
 ```bash
 npm run start
 ```
-The API will be available at http://localhost:3000
+A API estará disponível em http://localhost:3000
 
-### 6. Access API documentation
-Open http://localhost:3000/api for Swagger UI (interactive docs).
-The OpenAPI YAML is auto-generated at `openapi.yaml`.
+### 5. Documentação da API
+Acesse http://localhost:3000/api para a documentação Swagger.
 
-## Running with Docker
-
-1. Build the Docker image:
+### 6. Docker (opcional)
 ```bash
-docker build -t nestjs-app .
-```
-2. Run the container:
-```bash
-docker run -p 3000:3000 --env-file .env nestjs-app
+docker build -t rural-assets-api .
+docker run -p 3000:3000 --env-file .env rural-assets-api
 ```
 
-## API Overview
+## Estrutura do Projeto
+- `src/` — Código-fonte principal
+- `src/modules/` — Módulos de domínio (ex: produtor, propriedade, cultura)
+- `src/core/` — Classes e utilitários compartilhados
+- `src/db/` — Configuração e migrações do banco
 
-### User Registration (STAFF only)
-- `POST /users` — Register a new user (requires STAFF JWT)
-
-### User Login
-- `POST /users/login` — Authenticate and receive JWT
-
-## Migrations
-To run migrations manually:
+## Testes
+Execute os testes com:
 ```bash
-npm run migration
+npm run test
 ```
 
-## Project Structure
-- `src/` — Main source code
-- `src/modules/user/` — User module (controller, service, DTOs, guards)
-- `src/core/` — Shared base classes
-- `src/db/` — Database config and migrations
-
-## License
+## Licença
 MIT
