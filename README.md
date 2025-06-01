@@ -123,6 +123,74 @@ farmableArea + vegetationArea <= totalArea
 
 If this rule is violated, the API will return a 400 Bad Request with a clear error message.
 
+## Entity Relationship Diagram (ERD)
+
+```mermaid
+erDiagram
+    USER ||--o{ PRODUCER : manages
+    PRODUCER ||--o{ PROPERTY : owns
+    PROPERTY ||--o{ SEASON_HARVEST : has
+    CROP ||--o{ SEASON_HARVEST : planted_in
+    SEASON ||--o{ SEASON_HARVEST : occurs_in
+
+    USER {
+      uuid id
+      string name
+      string email
+      string password
+      timestamp created_at
+      timestamp updated_at
+      timestamp deleted_at
+    }
+    PRODUCER {
+      uuid id
+      string name
+      string cpf_cnpj
+      timestamp created_at
+      timestamp updated_at
+      timestamp deleted_at
+    }
+    PROPERTY {
+      uuid id
+      string name
+      string city
+      string state_short_name
+      float total_area
+      float farmable_area
+      float vegetation_area
+      uuid producer_id
+      timestamp created_at
+      timestamp updated_at
+      timestamp deleted_at
+    }
+    CROP {
+      uuid id
+      string name
+      timestamp created_at
+      timestamp updated_at
+      timestamp deleted_at
+    }
+    SEASON {
+      uuid id
+      int reference_year
+      timestamp created_at
+      timestamp updated_at
+      timestamp deleted_at
+    }
+    SEASON_HARVEST {
+      uuid id
+      uuid property_id
+      uuid crop_id
+      uuid season_id
+      float area
+      timestamp created_at
+      timestamp updated_at
+      timestamp deleted_at
+    }
+```
+
+This diagram shows the relationships between users, producers, properties, crops, seasons, and season harvests in the system.
+
 ## License
 
 MIT
