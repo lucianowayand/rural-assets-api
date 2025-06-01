@@ -162,6 +162,79 @@ paths:
         '200':
           description: ''
       tags: *ref_2
+  /crops:
+    get:
+      operationId: CropController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: List of crops
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CropDto'
+      summary: Get all crops
+      tags: &ref_3
+        - Crops
+    post:
+      operationId: CropController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCropDto'
+      responses:
+        '201':
+          description: The created crop
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CropDto'
+      summary: Create a new crop
+      tags: *ref_3
+  /crops/{id}:
+    delete:
+      operationId: CropController_softDelete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Crop ID
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Crop soft deleted
+      summary: Soft delete a crop
+      tags: *ref_3
+    patch:
+      operationId: CropController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Crop ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCropDto'
+      responses:
+        '200':
+          description: The updated crop
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CropDto'
+      summary: Update a crop
+      tags: *ref_3
 info:
   title: NestJS Minimal API
   description: API de exemplo para start rapido.
@@ -271,3 +344,43 @@ components:
     UpdatePropertyDto:
       type: object
       properties: {}
+    CropDto:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        deletedAt:
+          format: date-time
+          type: string
+        name:
+          type: string
+          example: Soybean
+          description: Name of the crop
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - name
+    CreateCropDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Soybean
+          description: Name of the crop
+      required:
+        - name
+    UpdateCropDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Soybean
+          description: Name of the crop

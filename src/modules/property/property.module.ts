@@ -9,6 +9,6 @@ import { UserModule } from '../user/user.module';
   imports: [TypeOrmModule.forFeature([PropertyEntity]), UserModule],
   providers: [PropertyService],
   controllers: [PropertyController],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, PropertyService],
 })
 export class PropertyModule {}

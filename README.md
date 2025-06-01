@@ -10,6 +10,9 @@ https://rural-assets-api.onrender.com
 - Role-based access control (STAFF/USER)
 - Producer management (CRUD)
 - Property management (CRUD)
+- Crop management (CRUD)
+- Season management (CRUD)
+- Season harvest management (CRUD)
 - Soft delete for all entities
 - Validation: Ensures farmableArea + vegetationArea does not exceed totalArea for properties
 - PostgreSQL integration (via DATABASE_URL)
@@ -73,7 +76,8 @@ docker run -p 3000:3000 --env-file .env rural-assets-api
 
 - `POST /users` — Register a new user (STAFF only)
 - `POST /users/login` — Authenticate and receive JWT
-- 
+-
+
 ### Producers
 
 - `GET /producers` — List all producers for the authenticated user
@@ -87,6 +91,27 @@ docker run -p 3000:3000 --env-file .env rural-assets-api
 - `POST /properties` — Create a new property (validates area constraints)
 - `PATCH /properties/:id` — Update a property (validates area constraints)
 - `DELETE /properties/:id` — Soft delete a property
+
+### Crops
+
+- `GET /crops` — List all crops
+- `POST /crops` — Create a new crop
+- `PATCH /crops/:id` — Update a crop
+- `DELETE /crops/:id` — Soft delete a crop
+
+### Seasons
+
+- `GET /seasons` — List all seasons
+- `POST /seasons` — Create a new season
+- `PATCH /seasons/:id` — Update a season
+- `DELETE /seasons/:id` — Soft delete a season
+
+### Season Harvests
+
+- `GET /season-harvests` — List all season harvests
+- `POST /season-harvests` — Create a new season harvest
+- `PATCH /season-harvests/:id` — Update a season harvest
+- `DELETE /season-harvests/:id` — Soft delete a season harvest
 
 ## Validation Example
 

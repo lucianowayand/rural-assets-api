@@ -7,6 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './modules/user/user.module';
 import { ProducerModule } from './modules/producer/producer.module';
 import { PropertyModule } from './modules/property/property.module';
+import { CropModule } from './modules/crop/crop.module';
+import { SeasonModule } from './modules/season/season.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { PropertyModule } from './modules/property/property.module';
     UserModule,
     ProducerModule,
     PropertyModule,
+    CropModule,
+    SeasonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
