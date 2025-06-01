@@ -1,6 +1,6 @@
 # Rural Assets API
 
-This project is a backend API for managing rural producers and their properties. It is publicly available at:
+This project is a backend API for managing rural producers, their properties, and related assets. It is publicly available at:
 
 https://rural-assets-api.onrender.com
 
@@ -9,11 +9,14 @@ https://rural-assets-api.onrender.com
 - User registration and authentication (JWT)
 - Role-based access control (STAFF/USER)
 - Producer management (CRUD)
+- Property management (CRUD)
 - Soft delete for all entities
+- Validation: Ensures farmableArea + vegetationArea does not exceed totalArea for properties
 - PostgreSQL integration (via DATABASE_URL)
 - TypeORM migrations and soft delete support
 - OpenAPI (Swagger) documentation
 - Docker support
+- Unit tests for service and controller layers
 
 ## How to run the project
 
@@ -60,12 +63,17 @@ docker run -p 3000:3000 --env-file .env rural-assets-api
 ## Project Structure
 
 - `src/` — Main source code
-- `src/modules/` — Domain modules (e.g., producer, user)
+- `src/modules/` — Domain modules (e.g., producer, property, user)
 - `src/core/` — Shared classes and utilities
 - `src/db/` — Database configuration and migrations
 
 ## API Overview
 
+### Users
+
+- `POST /users` — Register a new user (STAFF only)
+- `POST /users/login` — Authenticate and receive JWT
+- 
 ### Producers
 
 - `GET /producers` — List all producers for the authenticated user
@@ -73,10 +81,22 @@ docker run -p 3000:3000 --env-file .env rural-assets-api
 - `PATCH /producers/:id` — Update the name of a producer
 - `DELETE /producers/:id` — Soft delete a producer
 
-### Users
+### Properties
 
-- `POST /users` — Register a new user (STAFF only)
-- `POST /users/login` — Authenticate and receive JWT
+- `GET /properties/:producerId` — List all properties for a producer
+- `POST /properties` — Create a new property (validates area constraints)
+- `PATCH /properties/:id` — Update a property (validates area constraints)
+- `DELETE /properties/:id` — Soft delete a property
+
+## Validation Example
+
+A property is only valid if:
+
+```
+farmableArea + vegetationArea <= totalArea
+```
+
+If this rule is violated, the API will return a 400 Bad Request with a clear error message.
 
 ## License
 

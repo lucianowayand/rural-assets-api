@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { existsSync, writeFileSync } from 'fs';
 import { dump } from 'js-yaml';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   if (!existsSync('dist/commit.txt')) {
@@ -16,6 +17,7 @@ async function bootstrap() {
   }
 
   const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
 
   const config = new DocumentBuilder()
     .setTitle('NestJS Minimal API')

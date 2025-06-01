@@ -103,6 +103,65 @@ paths:
         '200':
           description: Producer name updated.
       tags: *ref_1
+  /properties/{producerId}:
+    get:
+      operationId: PropertyController_findByProducerId
+      parameters:
+        - name: producerId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: &ref_2
+        - Property
+  /properties:
+    post:
+      operationId: PropertyController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePropertyDto'
+      responses:
+        '201':
+          description: ''
+      tags: *ref_2
+  /properties/{id}:
+    delete:
+      operationId: PropertyController_softDelete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      tags: *ref_2
+    patch:
+      operationId: PropertyController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePropertyDto'
+      responses:
+        '200':
+          description: ''
+      tags: *ref_2
 info:
   title: NestJS Minimal API
   description: API de exemplo para start rapido.
@@ -204,5 +263,11 @@ components:
       type: object
       properties: {}
     UpdateProducerDto:
+      type: object
+      properties: {}
+    CreatePropertyDto:
+      type: object
+      properties: {}
+    UpdatePropertyDto:
       type: object
       properties: {}
