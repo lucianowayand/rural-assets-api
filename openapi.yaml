@@ -50,6 +50,59 @@ paths:
               schema:
                 $ref: '#/components/schemas/LoginResponseDto'
       tags: *ref_0
+  /producers:
+    get:
+      operationId: ProducerController_findByUserId
+      parameters: []
+      responses:
+        '200':
+          description: List of producers for the authenticated user.
+      tags: &ref_1
+        - producers
+    post:
+      operationId: ProducerController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProducerDto'
+      responses:
+        '201':
+          description: Producer created.
+      tags: *ref_1
+  /producers/{id}:
+    delete:
+      operationId: ProducerController_softDelete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Producer deleted.
+      tags: *ref_1
+    patch:
+      operationId: ProducerController_updateName
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProducerDto'
+      responses:
+        '200':
+          description: Producer name updated.
+      tags: *ref_1
 info:
   title: NestJS Minimal API
   description: API de exemplo para start rapido.
@@ -147,3 +200,9 @@ components:
       required:
         - user
         - authToken
+    CreateProducerDto:
+      type: object
+      properties: {}
+    UpdateProducerDto:
+      type: object
+      properties: {}

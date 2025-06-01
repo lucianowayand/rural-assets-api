@@ -4,6 +4,17 @@ This project is a backend API for managing rural producers and their properties.
 
 https://rural-assets-api.onrender.com
 
+## Features
+
+- User registration and authentication (JWT)
+- Role-based access control (STAFF/USER)
+- Producer management (CRUD)
+- Soft delete for all entities
+- PostgreSQL integration (via DATABASE_URL)
+- TypeORM migrations and soft delete support
+- OpenAPI (Swagger) documentation
+- Docker support
+
 ## How to run the project
 
 ### 1. Install dependencies
@@ -49,17 +60,23 @@ docker run -p 3000:3000 --env-file .env rural-assets-api
 ## Project Structure
 
 - `src/` — Main source code
-- `src/modules/` — Domain modules (e.g., producer, property, crop)
+- `src/modules/` — Domain modules (e.g., producer, user)
 - `src/core/` — Shared classes and utilities
 - `src/db/` — Database configuration and migrations
 
-## Tests
+## API Overview
 
-Run tests with:
+### Producers
 
-```bash
-npm run test
-```
+- `GET /producers` — List all producers for the authenticated user
+- `POST /producers` — Create a new producer
+- `PATCH /producers/:id` — Update the name of a producer
+- `DELETE /producers/:id` — Soft delete a producer
+
+### Users
+
+- `POST /users` — Register a new user (STAFF only)
+- `POST /users/login` — Authenticate and receive JWT
 
 ## License
 
