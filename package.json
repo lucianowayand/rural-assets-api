@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build && npm run migration && git rev-parse HEAD > dist/commit.txt",
+    "build": "nest build && npm run migration && (git rev-parse HEAD > dist/commit.txt || echo 'unknown' > dist/commit.txt)",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
