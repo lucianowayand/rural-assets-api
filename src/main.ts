@@ -24,7 +24,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  
+
   writeFileSync('./openapi.yaml', dump(document), 'utf8');
   SwaggerModule.setup('api', app, document);
 

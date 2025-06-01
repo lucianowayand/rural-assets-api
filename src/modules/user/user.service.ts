@@ -17,27 +17,17 @@ export class UserService {
     this.userRepository = userRepository;
   }
 
-  findById(
-    id: string,
-    transaction?: EntityManager,
-  ): Promise<UserEntity | null> {
+  findById(id: string, transaction?: EntityManager): Promise<UserEntity | null> {
     if (!transaction) {
-      return this.userRepository.manager.transaction((t) =>
-        this.findById(id, t),
-      );
+      return this.userRepository.manager.transaction((t) => this.findById(id, t));
     }
 
     return transaction.findOne(UserEntity, { where: { id } });
   }
 
-  findByEmail(
-    email: string,
-    transaction?: EntityManager,
-  ): Promise<UserEntity | null> {
+  findByEmail(email: string, transaction?: EntityManager): Promise<UserEntity | null> {
     if (!transaction) {
-      return this.userRepository.manager.transaction((t) =>
-        this.findByEmail(email, t),
-      );
+      return this.userRepository.manager.transaction((t) => this.findByEmail(email, t));
     }
 
     return transaction.findOne(UserEntity, {
@@ -47,14 +37,9 @@ export class UserService {
     });
   }
 
-  async register(
-    user: CreateUserDto,
-    transaction?: EntityManager,
-  ): Promise<UserEntity> {
+  async register(user: CreateUserDto, transaction?: EntityManager): Promise<UserEntity> {
     if (!transaction) {
-      return this.userRepository.manager.transaction((t) =>
-        this.register(user, t),
-      );
+      return this.userRepository.manager.transaction((t) => this.register(user, t));
     }
 
     const existingUser = await this.findByEmail(user.email, transaction);
@@ -79,9 +64,7 @@ export class UserService {
     transaction?: EntityManager,
   ): Promise<{ authToken: string; user: UserEntity }> {
     if (!transaction) {
-      return this.userRepository.manager.transaction((t) =>
-        this.login(email, password, t),
-      );
+      return this.userRepository.manager.transaction((t) => this.login(email, password, t));
     }
 
     const user = await this.findByEmail(email, transaction);

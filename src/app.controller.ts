@@ -14,10 +14,10 @@ export class AppController {
 
   @Get()
   @ApiResponse({
-      status: 200,
-      description: 'Returns current version as the latest hashed commit',
-      type: VersionDto,
-    })
+    status: 200,
+    description: 'Returns current version as the latest hashed commit',
+    type: VersionDto,
+  })
   getVersion(): { version: string } {
     return this.appService.getVersion();
   }

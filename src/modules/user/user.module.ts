@@ -8,10 +8,7 @@ import { IsAuthorizedGuard } from './guards/is-authorized.guard';
 import { IsStaffGuard } from './guards/is-staff.guard';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([UserEntity]),
-    JwtModule.register({}),
-  ],
+  imports: [TypeOrmModule.forFeature([UserEntity]), JwtModule.register({})],
   controllers: [UserController],
   providers: [UserService, JwtService, IsAuthorizedGuard, IsStaffGuard],
   exports: [IsAuthorizedGuard, IsStaffGuard, JwtModule],

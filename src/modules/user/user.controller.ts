@@ -20,15 +20,10 @@ export class UserController {
     type: UserDto,
   })
   @UseGuards(IsStaffGuard)
-  async register(
-    @Body() user: CreateUserDto,
-    @Req() req,
-  ): Promise<UserDto> {
+  async register(@Body() user: CreateUserDto, @Req() req): Promise<UserDto> {
     const newUser = await this.userService.register(user);
     const staffEmail = req.user?.email || 'unknown';
-    this.logger.log(
-      `Staff (${staffEmail}) created user: ${newUser.email} (id: ${newUser.id})`,
-    );
+    this.logger.log(`Staff (${staffEmail}) created user: ${newUser.email} (id: ${newUser.id})`);
     return UserMapper.fromEntityToDto(newUser);
   }
 
@@ -39,10 +34,7 @@ export class UserController {
     type: LoginResponseDto,
   })
   async login(@Body() payload: LoginDto): Promise<LoginResponseDto> {
-    const { authToken, user } = await this.userService.login(
-      payload.email,
-      payload.password,
-    );
+    const { authToken, user } = await this.userService.login(payload.email, payload.password);
 
     return {
       authToken,
