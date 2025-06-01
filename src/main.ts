@@ -2,9 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { existsSync, writeFileSync } from 'fs';
+import { dump } from 'js-yaml';
 
 async function bootstrap() {
-  // Ensure dist/commit.txt exists with a value
   if (!existsSync('dist/commit.txt')) {
     try {
       const { execSync } = require('child_process');
@@ -19,10 +19,13 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('NestJS Minimal API')
-    .setDescription('API documentation')
-    .setVersion('1.0')
+    .setDescription('API de exemplo para start rapido.')
+    .setVersion('1.0.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
+  
+  writeFileSync('./openapi.yaml', dump(document), 'utf8');
   SwaggerModule.setup('api', app, document);
 
   await app.listen(process.env.PORT ?? 3000);
