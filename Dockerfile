@@ -1,5 +1,5 @@
 # Use official Node.js LTS image
-FROM node:20-alpine
+FROM node:lts-alpine 
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -10,8 +10,9 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install --production
 
-# Install git (required for build script)
-RUN apk add --no-cache git
+# Install git and NestJS CLI globally (required for build script)
+RUN apk add --no-cache git \
+    && npm install -g @nestjs/cli
 
 # Copy the rest of the application code
 COPY . .
